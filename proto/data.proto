@@ -1,0 +1,9 @@
+syntax = "proto3";
+package example;
+service FormatData {
+  rpc sample(Data) returns (Data){}
+  rpc GetStatMetric(Data) returns(Data){}
+}
+message Data {
+  string text = 1;
+}
