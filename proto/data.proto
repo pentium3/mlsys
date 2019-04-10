@@ -1,9 +1,14 @@
 syntax = "proto3";
 package example;
 service FormatData {
-  rpc sample(Data) returns (Data){}
-  rpc GetStatMetric(Data) returns(Data){}
+  rpc sample(StrObj) returns (StrObj){}
+  rpc RunBenchmarkPool(StrObj) returns(ListObj){}
 }
-message Data {
+
+message ListObj {
+  repeated string lstobj = 1;
+}
+
+message StrObj {
   string text = 1;
 }
