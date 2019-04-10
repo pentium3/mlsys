@@ -36,9 +36,13 @@ def GetStatMetric(type):
     return (ans)
 
 def RunBenchmark(type):
-    time.sleep(790)
+    benchdir=os.path.join(os.getcwd(),'benchmark',type)
+    sys.path.append(benchdir)
+    print("Bench "+benchdir)
+    import bench as pb
+    pb.sampleRun()
     #TODO: Run real benchmarking
-    print("Bench "+type+" finished")
+    print("Bench "+benchdir+" finished")
 
 class FormatData(data_pb2_grpc.FormatDataServicer):
     def sample(self, request, context):
@@ -65,6 +69,7 @@ class FormatData(data_pb2_grpc.FormatDataServicer):
             MetricList.append(_l)
             for _x in MetricDict[_l]:
                 MetricList.append(_x)
+        #TODO: remove the last one in list MetricDict[_l], since the last monitor data may be get after the bench finished
         return(data_pb2.ListObj(lstobj=MetricList))
 
 def serve():
