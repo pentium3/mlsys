@@ -36,7 +36,7 @@ def GetStatMetric(type):
     return (ans)
 
 def RunBenchmark(type):
-    time.sleep(10)
+    time.sleep(790)
     #TODO: Run real benchmarking
     print("Bench "+type+" finished")
 
