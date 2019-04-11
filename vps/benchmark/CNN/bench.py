@@ -30,7 +30,7 @@ class Bench(object):
 
     def Run(self, ):
         start_time = time.time()
-        mnist = input_data.read_data_sets("CNN/MNIST-data/", one_hot=True)
+        mnist = input_data.read_data_sets("benchmark/CNN/MNIST-data/", one_hot=True)
         trX, trY, teX, teY = mnist.train.images, mnist.train.labels, mnist.test.images, mnist.test.labels
         trX = trX.reshape(-1, 28, 28, 1)
         teX = teX.reshape(-1, 28, 28, 1)
@@ -71,6 +71,3 @@ class Bench(object):
         print("This is Benchmark CNN")
         return (10)
 
-cls = Bench()
-ANS = cls.Run()
-print(ANS)

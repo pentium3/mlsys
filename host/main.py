@@ -26,6 +26,7 @@ def RunBenchOnVPS(BenchType):
     client = data_pb2_grpc.FormatDataStub(channel=conn)
     response = client.RunBenchmarkPool(data_pb2.StrObj(text=BenchType))
     MetricList=response.lstobj
+    BenchTime=int(MetricList[-1])
     cnt=int(MetricList[0])
     NumofMetrics=int((len(MetricList)-1)/(cnt+1))
     NumofRecords=cnt
@@ -36,8 +37,8 @@ def RunBenchOnVPS(BenchType):
         MetricDict[tmp]=[]
         for j in range(st+1,st+NumofRecords+1):
             MetricDict[tmp].append(MetricList[j])
-    return (MetricDict)
+    return (BenchTime, MetricDict)
 
 if __name__ == '__main__':
-    MetricDict=RunBenchOnVPS("CNN")       #Host is blocked until benchmark finished
-    print(MetricDict)
+    BenchTime, MetricDict=RunBenchOnVPS("CNN")       #Host is blocked until benchmark finished
+    print(BenchTime, MetricDict)
