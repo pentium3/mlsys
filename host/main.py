@@ -40,5 +40,5 @@ def RunBenchOnVPS(BenchType):
     return (BenchTime, MetricDict)
 
 if __name__ == '__main__':
-    BenchTime, MetricDict=RunBenchOnVPS("UNIXBENCH")       #Host is blocked until benchmark finished
-    print(BenchTime, MetricDict)
+    BenchTime, MetricDict=RunBenchOnVPS("CNN")       #Host is blocked until benchmark finished
+    print(BenchTime, len(MetricDict['CPUUSG']))

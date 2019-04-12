@@ -17,6 +17,7 @@ class Bench(object):
         end_time = time.time()
         self.total_ptime = (int)(end_time - start_time)
         print(runshell,type(runshell),self.total_ptime)
+        print("This is Benchmark UNIXBENCH: "+(str)(self.total_ptime))
         return (self.total_ptime)
 
     def sampleRun(self,):

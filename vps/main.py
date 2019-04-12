@@ -32,15 +32,17 @@ def GetStatMetric(type):
         ans=str(psutil.virtual_memory().percent)
     elif(type=="IOBYTE"):
         ans=str(psutil.disk_io_counters())	    #total HDD I/O amount in Bytes
-    print("received req for " + type + " == " + ans)
+    #print("received req for " + type + " == " + ans)
     return (ans)
 
 def RunBenchmark(type):
     benchdir=os.path.join(os.getcwd(),'benchmark',type)
     sys.path.append(benchdir)
+    print("RunBenchmark " + benchdir)
     import bench as pb
     ans=pb.Bench().Run()
-    print("Bench "+benchdir+" finished")
+    del pb
+    sys.path.remove(benchdir)
     return (ans)
 
 class FormatData(data_pb2_grpc.FormatDataServicer):
@@ -58,8 +60,9 @@ class FormatData(data_pb2_grpc.FormatDataServicer):
         task=pool.submit(RunBenchmark, type)    #Start another thread to run benchmark
         cnt=0
         while(not task.done()):                 #Monitor CPU/MEM/IO while benchmarking
-            time.sleep(1)
+            time.sleep(0.4)
             cnt+=1
+            #print(cnt,time.time())
             for _l in MonitorList:
                 MetricDict[_l].append(GetStatMetric(_l))
         BenchTime=task.result()
@@ -74,6 +77,7 @@ class FormatData(data_pb2_grpc.FormatDataServicer):
             for _x in MetricDict[_l]:
                 MetricList.append(_x)
         MetricList.append(str(BenchTime))
+        print("Bench "+type+" finished. ", len(MetricDict['CPUUSG']), cnt)
         return(data_pb2.ListObj(lstobj=MetricList))
 
 def serve():

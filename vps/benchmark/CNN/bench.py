@@ -65,9 +65,11 @@ class Bench(object):
                                           feed_dict={X: teX[test_indices], p_keep_conv: 1.0, p_keep_hidden: 1.0})))
         end_time = time.time()
         self.total_ptime = (int)(end_time - start_time)
+        print("This is Benchmark CNN: "+(str)(self.total_ptime))
         return (self.total_ptime)
 
     def sampleRun(self,):
+        time.sleep(10)
         print("This is Benchmark CNN")
         return (10)
 
