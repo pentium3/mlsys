@@ -11,13 +11,9 @@ import psutil
 import json
 from concurrent.futures import ThreadPoolExecutor
 
-context = zmq.Context()
-socket = context.socket(zmq.REP)
-socket.bind("tcp://*:5555")
-
-context2=zmq.Context()
-socket2=context2.socket(zmq.REP)
-socket2.bind("tcp://192.168.122.1:5556")
+context=zmq.Context()
+socket=context.socket(zmq.REQ)
+socket.bind("tcp://192.168.122.1:5555")
 
 MonitorList=['CPUUSG', 'MEMUSG', 'IOBYTE']
 
@@ -76,7 +72,7 @@ def RunBenchmarkPool(request):
     return(MetricList)
 
 if __name__ == '__main__':
-    socket2.send_pyobj("vps started")
+    socket.send_pyobj("vps started")
     while True:
         msg=socket.recv_pyobj()
         ResList=RunBenchmarkPool(msg)

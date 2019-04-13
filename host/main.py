@@ -11,12 +11,8 @@ import xml.etree.ElementTree as XET
 import zmq
 
 context = zmq.Context()
-socket = context.socket(zmq.REQ)
-socket.connect("tcp://192.168.122.28:5555")
-
-context2=zmq.Context()
-socket2=context2.socket(zmq.REP)
-socket2.bind("tcp://*:5556")
+socket = context.socket(zmq.REP)
+socket.connect("tcp://*:5555")
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
@@ -74,7 +70,7 @@ def RunBenchOnVPS(BenchType):
 
 if __name__ == '__main__':
     os.system("virsh start ubuntu")
-    response = socket2.recv_pyobj()
+    response = socket.recv_pyobj()
     print(response)
 
     #init
