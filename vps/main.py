@@ -13,7 +13,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 context=zmq.Context()
 socket=context.socket(zmq.REQ)
-socket.bind("tcp://192.168.122.1:5555")
+socket.connect("tcp://192.168.122.1:5555")
 
 MonitorList=['CPUUSG', 'MEMUSG', 'IOBYTE']
 
