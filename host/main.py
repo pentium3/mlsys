@@ -12,7 +12,11 @@ import zmq
 
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
-socket.connect("tcp://localhost:5555")
+socket.connect("tcp://192.168.122.28:5555")
+
+context2=zmq.Context()
+socket2=context2.socket(zmq.REP)
+socket2.bind("tcp://*:5556")
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
@@ -69,6 +73,10 @@ def RunBenchOnVPS(BenchType):
     return (BenchTime, MetricDict)
 
 if __name__ == '__main__':
+    os.system("virsh start ubuntu")
+    response = socket2.recv_pyobj()
+    print(response)
+
     #init
     cfgspace=SearchSpace()
     cfgspace.ReadCfgFile('vpscfg.json')
@@ -77,13 +85,13 @@ if __name__ == '__main__':
     #run benchmark on VPS
     # BUG: only support 1 type of benchmark at one time
     BenchTime, MetricDict=RunBenchOnVPS("CNN")
-    print('bench: ', BenchTime, MetricDict)
+    print('bench: ', BenchTime, len(MetricDict['cpu']))
 
     #TODO: ML model to choose new configuration
     time.sleep(1)
 
     #Change VPS configuration
-    NewCfgDict={"cpu": 0, "mem": 0, "hdd": 0}
+    NewCfgDict={"cpu": 3, "mem": 3, "hdd": 2}
     res=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
     print('setcfg: ', res)
 

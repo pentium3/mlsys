@@ -5,10 +5,6 @@
 import zmq
 import sys
 import os
-pwd=os.path.join(os.getcwd(),"..")
-sys.path.append(pwd)
-pwd=os.path.join(os.getcwd(),"..","proto")
-sys.path.append(pwd)
 import time
 from concurrent import futures
 import psutil
@@ -18,6 +14,10 @@ from concurrent.futures import ThreadPoolExecutor
 context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
+
+context2=zmq.Context()
+socket2=context2.socket(zmq.REP)
+socket2.bind("tcp://192.168.122.1:5556")
 
 MonitorList=['CPUUSG', 'MEMUSG', 'IOBYTE']
 
@@ -76,6 +76,7 @@ def RunBenchmarkPool(request):
     return(MetricList)
 
 if __name__ == '__main__':
+    socket2.send_pyobj("started")
     while True:
         msg=socket.recv_pyobj()
         ResList=RunBenchmarkPool(msg)
