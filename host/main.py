@@ -91,6 +91,7 @@ if __name__ == '__main__':
     time.sleep(1)
 
     #Change VPS configuration
+    # TODO: wait for vps shutting down
     NewCfgDict={"cpu": 3, "mem": 3, "hdd": 2}
     res=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
     print('setcfg: ', res)
