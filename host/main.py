@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # Host side
-import grpc
 import sys
 import json
 import os
@@ -69,6 +68,7 @@ def RunBenchOnVPS(BenchType):
     return (BenchTime, MetricDict)
 
 if __name__ == '__main__':
+    #wait for starting vps
     os.system("virsh start ubuntu")
     response = socket.recv_pyobj()
     print(response)
@@ -81,13 +81,12 @@ if __name__ == '__main__':
     #run benchmark on VPS
     # BUG: only support 1 type of benchmark at one time
     BenchTime, MetricDict=RunBenchOnVPS("CNN")
-    print('bench: ', BenchTime, len(MetricDict['cpu']))
+    print('bench: ', BenchTime, len(MetricDict['CPUUSG']))
 
     #TODO: ML model to choose new configuration
     time.sleep(1)
 
     #Change VPS configuration
-    # TODO: wait for vps shutting down
     NewCfgDict={"cpu": 3, "mem": 3, "hdd": 2}
     res=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
     print('setcfg: ', res)

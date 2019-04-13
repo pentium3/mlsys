@@ -73,8 +73,9 @@ def RunBenchmarkPool(request):
 
 if __name__ == '__main__':
     socket.send_pyobj("vps started")
-    while True:
-        msg=socket.recv_pyobj()
-        ResList=RunBenchmarkPool(msg)
-        socket.send_pyobj(ResList)
+    msg=socket.recv_pyobj()
+    ResList=RunBenchmarkPool(msg)
+    socket.send_pyobj(ResList)
+    time.sleep(2)
+    # TODO: shutdown vps
 
