@@ -2,20 +2,16 @@
 # -*- coding: utf-8 -*-
 
 # Host side
-import grpc
 import sys
 import json
 import os
 import time
-pwd=os.path.join(os.getcwd(),"..")
-sys.path.append(pwd)
-pwd=os.path.join(os.getcwd(),"..","proto")
-sys.path.append(pwd)
-from proto import data_pb2, data_pb2_grpc
 import xml.etree.ElementTree as XET
+import zmq
 
-_HOST = 'localhost'
-_PORT = '8080'
+context = zmq.Context()
+socket = context.socket(zmq.REP)
+socket.bind("tcp://*:5555")
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
@@ -55,10 +51,9 @@ class SearchSpace():
         return(1)
 
 def RunBenchOnVPS(BenchType):
-    conn = grpc.insecure_channel(_HOST + ':' + _PORT)
-    client = data_pb2_grpc.FormatDataStub(channel=conn)
-    response = client.RunBenchmarkPool(data_pb2.StrObj(text=BenchType))
-    MetricList=response.lstobj
+    socket.send_pyobj(BenchType)
+    response=socket.recv_pyobj()
+    MetricList=response
     BenchTime=int(MetricList[-1])
     cnt=int(MetricList[0])
     NumofMetrics=int((len(MetricList)-1)/(cnt+1))
@@ -73,6 +68,11 @@ def RunBenchOnVPS(BenchType):
     return (BenchTime, MetricDict)
 
 if __name__ == '__main__':
+    #wait for starting vps
+    os.system("virsh start ubuntu")
+    response = socket.recv_pyobj()
+    print(response)
+
     #init
     cfgspace=SearchSpace()
     cfgspace.ReadCfgFile('vpscfg.json')
@@ -80,14 +80,14 @@ if __name__ == '__main__':
 
     #run benchmark on VPS
     # BUG: only support 1 type of benchmark at one time
-    BenchTime, MetricDict=RunBenchOnVPS("UNIXBENCH")
-    print('bench: ', BenchTime, MetricDict)
+    BenchTime, MetricDict=RunBenchOnVPS("CNN")
+    print('bench: ', BenchTime, len(MetricDict['CPUUSG']))
 
     #TODO: ML model to choose new configuration
     time.sleep(1)
 
     #Change VPS configuration
-    NewCfgDict={"cpu": 0, "mem": 0, "hdd": 0}
+    NewCfgDict={"cpu": 3, "mem": 3, "hdd": 2}
     res=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
     print('setcfg: ', res)
 

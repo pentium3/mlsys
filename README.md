@@ -2,17 +2,22 @@
 
 ## Introduction
 
-#### client: agent on Host side
+#### server: agent on Host side
 
 Control the VPS and recommend new configuration for VPS.
 
-#### server: agent on VPS side
+#### client: agent on VPS side
 
-Run benchmark and monitor performance metrics on VPS.
+Run benchmark and monitor performance metrics. Send the performance data to Host.
+
+## Installation
+
+1. Install python packages
+
+```pip install -r requirements.txt```
+
+2. Add ```python main.py``` to startup script in VPS
 
 ## Usage
 
-```bash
-make.bat
-```
-
+Run ```python main.py``` on host side. Then the VPS will be automatically started.
