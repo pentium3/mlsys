@@ -1,0 +1,63 @@
+   BYTE UNIX Benchmarks (Version 5.1.3)
+
+   System: pcserver: GNU/Linux
+   OS: GNU/Linux -- 4.15.0-47-generic -- #50-Ubuntu SMP Wed Mar 13 10:44:52 UTC 2019
+   Machine: x86_64 (x86_64)
+   Language: en_US.utf8 (charmap="UTF-8", collate="UTF-8")
+   CPU 0: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 1: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 2: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 3: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 4: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 5: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 6: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 7: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 8: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 9: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 10: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   CPU 11: AMD Ryzen 5 2600 Six-Core Processor (6786.9 bogomips)
+          Hyper-Threading, x86-64, MMX, AMD MMX, Physical Address Ext, SYSENTER/SYSEXIT, AMD virtualization, SYSCALL/SYSRET
+   01:30:42 up  4:27,  1 user,  load average: 0.99, 4.45, 4.87; runlevel 5
+
+------------------------------------------------------------------------
+Benchmark Run: Sat Apr 13 2019 01:30:42 - 01:37:21
+12 CPUs in system; running 12 parallel copies of tests
+
+Dhrystone 2 using register variables      323798803.4 lps   (10.0 s, 1 samples)
+Double-Precision Whetstone                    36496.9 MWIPS (17.8 s, 1 samples)
+Execl Throughput                              35122.1 lps   (29.7 s, 1 samples)
+File Copy 1024 bufsize 2000 maxblocks        819958.0 KBps  (30.0 s, 1 samples)
+File Copy 256 bufsize 500 maxblocks          200606.0 KBps  (30.0 s, 1 samples)
+File Copy 4096 bufsize 8000 maxblocks       2631336.0 KBps  (30.0 s, 1 samples)
+Pipe Throughput                            15714369.2 lps   (10.0 s, 1 samples)
+Process Creation                              47794.2 lps   (30.0 s, 1 samples)
+Shell Scripts (1 concurrent)                  60124.0 lpm   (60.0 s, 1 samples)
+Shell Scripts (8 concurrent)                   8333.4 lpm   (60.0 s, 1 samples)
+System Call Overhead                       12298886.7 lps   (10.0 s, 1 samples)
+
+System Benchmarks Index Values               BASELINE       RESULT    INDEX
+Dhrystone 2 using register variables         116700.0  323798803.4  27746.3
+Double-Precision Whetstone                       55.0      36496.9   6635.8
+Execl Throughput                                 43.0      35122.1   8167.9
+File Copy 1024 bufsize 2000 maxblocks          3960.0     819958.0   2070.6
+File Copy 256 bufsize 500 maxblocks            1655.0     200606.0   1212.1
+File Copy 4096 bufsize 8000 maxblocks          5800.0    2631336.0   4536.8
+Pipe Throughput                               12440.0   15714369.2  12632.1
+Process Creation                                126.0      47794.2   3793.2
+Shell Scripts (1 concurrent)                     42.4      60124.0  14180.2
+Shell Scripts (8 concurrent)                      6.0       8333.4  13889.1
+System Call Overhead                          15000.0   12298886.7   8199.3
+                                                                   ========
+System Benchmarks Index Score                                        6749.8
+
