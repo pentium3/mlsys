@@ -1,0 +1,111 @@
+<domain type="kvm">
+  <name>ubuntu</name>
+  <uuid>cfe581a7-7222-4fff-a95b-076cd21f2358</uuid>
+  <memory unit="KiB">1048576</memory>
+  <currentMemory unit="KiB">1048576</currentMemory>
+  <vcpu placement="static">1</vcpu>
+  <os>
+    <type arch="x86_64" machine="pc-i440fx-bionic">hvm</type>
+    <bootmenu enable="yes" />
+  </os>
+  <features>
+    <acpi />
+    <apic />
+    <vmport state="off" />
+  </features>
+  <cpu check="partial" mode="host-model">
+    <model fallback="allow" />
+    <topology cores="1" sockets="1" threads="1" />
+  </cpu>
+  <clock offset="utc">
+    <timer name="rtc" tickpolicy="catchup" />
+    <timer name="pit" tickpolicy="delay" />
+    <timer name="hpet" present="no" />
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+  <pm>
+    <suspend-to-mem enabled="no" />
+    <suspend-to-disk enabled="no" />
+  </pm>
+  <devices>
+    <emulator>/usr/bin/kvm-spice</emulator>
+    <disk device="disk" type="file">
+      <driver name="qemu" type="qcow2" />
+      <source file="/media/ibm/DISK2_VOL1/kvmvpc/ubuntu_hdd.qcow2" />
+      <target bus="sata" dev="sda" />
+      <boot order="2" />
+      <address bus="0" controller="0" target="0" type="drive" unit="0" />
+    </disk>
+    <disk device="cdrom" type="file">
+      <driver name="qemu" type="raw" />
+      <target bus="sata" dev="sdb" />
+      <readonly />
+      <boot order="1" />
+      <address bus="0" controller="0" target="0" type="drive" unit="1" />
+    </disk>
+    <controller index="0" model="ich9-ehci1" type="usb">
+      <address bus="0x00" domain="0x0000" function="0x7" slot="0x05" type="pci" />
+    </controller>
+    <controller index="0" model="ich9-uhci1" type="usb">
+      <master startport="0" />
+      <address bus="0x00" domain="0x0000" function="0x0" multifunction="on" slot="0x05" type="pci" />
+    </controller>
+    <controller index="0" model="ich9-uhci2" type="usb">
+      <master startport="2" />
+      <address bus="0x00" domain="0x0000" function="0x1" slot="0x05" type="pci" />
+    </controller>
+    <controller index="0" model="ich9-uhci3" type="usb">
+      <master startport="4" />
+      <address bus="0x00" domain="0x0000" function="0x2" slot="0x05" type="pci" />
+    </controller>
+    <controller index="0" model="pci-root" type="pci" />
+    <controller index="0" type="sata">
+      <address bus="0x00" domain="0x0000" function="0x0" slot="0x06" type="pci" />
+    </controller>
+    <controller index="0" type="virtio-serial">
+      <address bus="0x00" domain="0x0000" function="0x0" slot="0x07" type="pci" />
+    </controller>
+    <interface type="direct">
+      <mac address="52:54:00:50:79:f7" />
+      <source dev="enp5s0" mode="bridge" />
+      <model type="rtl8139" />
+      <address bus="0x00" domain="0x0000" function="0x0" slot="0x03" type="pci" />
+    </interface>
+    <serial type="pty">
+      <target port="0" type="isa-serial">
+        <model name="isa-serial" />
+      </target>
+    </serial>
+    <console type="pty">
+      <target port="0" type="serial" />
+    </console>
+    <channel type="spicevmc">
+      <target name="com.redhat.spice.0" type="virtio" />
+      <address bus="0" controller="0" port="1" type="virtio-serial" />
+    </channel>
+    <input bus="ps2" type="mouse" />
+    <input bus="ps2" type="keyboard" />
+    <graphics autoport="yes" type="spice">
+      <listen type="address" />
+      <image compression="off" />
+    </graphics>
+    <sound model="ich6">
+      <address bus="0x00" domain="0x0000" function="0x0" slot="0x04" type="pci" />
+    </sound>
+    <video>
+      <model heads="1" primary="yes" ram="65536" type="qxl" vgamem="16384" vram="65536" />
+      <address bus="0x00" domain="0x0000" function="0x0" slot="0x02" type="pci" />
+    </video>
+    <redirdev bus="usb" type="spicevmc">
+      <address bus="0" port="1" type="usb" />
+    </redirdev>
+    <redirdev bus="usb" type="spicevmc">
+      <address bus="0" port="2" type="usb" />
+    </redirdev>
+    <memballoon model="virtio">
+      <address bus="0x00" domain="0x0000" function="0x0" slot="0x08" type="pci" />
+    </memballoon>
+  </devices>
+</domain>
