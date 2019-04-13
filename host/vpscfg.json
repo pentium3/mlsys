@@ -1,5 +1,7 @@
 {
 	"cpu": ["1", "2", "4", "6", "8"],
-	"mem": ["1", "2", "4", "6", "8"],
-	"hdd": ["hdd", "ssd", "nvme"]
+	"mem": ["1048576", "2097152", "4194304", "6291456", "8388608"],
+	"hdd": ["/media/ibm/DISK2_VOL1/kvmvpc/ubuntu_hdd.qcow2",
+			"/home/ibm/Desktop/ubuntu_ssd.qcow2",
+			"/media/ibm/NVME/ubuntu_nvme.qcow2"]
 }

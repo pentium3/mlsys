@@ -14,6 +14,8 @@ class Bench(object):
         runshell=os.popen('cat BenchRes | grep Score').read()
         runshell=runshell.replace('System Benchmarks Index Score                                        ','')
         runshell=float(runshell)    #UnixBench Score
+        cmd = "rm BenchRes"
+        os.system(cmd)
         end_time = time.time()
         self.total_ptime = (int)(end_time - start_time)
         print(runshell,type(runshell),self.total_ptime)

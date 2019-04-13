@@ -6,11 +6,13 @@ import grpc
 import sys
 import json
 import os
+import time
 pwd=os.path.join(os.getcwd(),"..")
 sys.path.append(pwd)
 pwd=os.path.join(os.getcwd(),"..","proto")
 sys.path.append(pwd)
 from proto import data_pb2, data_pb2_grpc
+import xml.etree.ElementTree as XET
 
 _HOST = 'localhost'
 _PORT = '8080'
@@ -20,6 +22,37 @@ class SearchSpace():
         f=open(CfgFile)
         self.CfgDict=json.load(f)
         self.CfgSet=list(self.CfgDict.keys())
+
+    def SetVPSCfg(self, FileName, NewCfgDict):
+        NewFileName = FileName.replace('.xml', '_new.xml')
+        os.system('rm '+NewFileName)
+        NewCPUidx=NewCfgDict['cpu']
+        NewMEMidx=NewCfgDict['mem']
+        NewHDDidx=NewCfgDict['hdd']
+        CPUlen=len(self.CfgDict['cpu'])
+        MEMlen=len(self.CfgDict['mem'])
+        HDDlen=len(self.CfgDict['hdd'])
+        if(NewCPUidx>=CPUlen or NewMEMidx>=MEMlen or NewHDDidx>=HDDlen):
+            return(-1)
+        NewCPU=self.CfgDict['cpu'][NewCPUidx]
+        NewMEM=self.CfgDict['mem'][NewMEMidx]
+        NewHDD=self.CfgDict['hdd'][NewHDDidx]
+        print('setcfg: ', NewCPU, NewMEM, NewHDD)
+        tree = XET.parse(FileName)
+        root=tree.getroot()
+        vcpu=root.find('vcpu')
+        cores=root.find('cpu').find('topology')
+        memory=root.find('memory')
+        currentmemory=root.find('currentMemory')
+        disk=root.find('devices').find('disk').find('source')
+        vcpu.text=NewCPU
+        cores.attrib['cores']=NewCPU
+        memory.text=NewMEM
+        currentmemory.text=NewMEM
+        disk.attrib['file']=NewHDD
+        tree.write(NewFileName)
+        os.system('virsh define '+NewFileName)
+        return(1)
 
 def RunBenchOnVPS(BenchType):
     conn = grpc.insecure_channel(_HOST + ':' + _PORT)
@@ -40,5 +73,21 @@ def RunBenchOnVPS(BenchType):
     return (BenchTime, MetricDict)
 
 if __name__ == '__main__':
-    BenchTime, MetricDict=RunBenchOnVPS("CNN")       #Host is blocked until benchmark finished
-    print(BenchTime, len(MetricDict['CPUUSG']))
+    #init
+    cfgspace=SearchSpace()
+    cfgspace.ReadCfgFile('vpscfg.json')
+    print('vpscfg: ', cfgspace.CfgDict)
+
+    #run benchmark on VPS
+    # BUG: only support 1 type of benchmark at one time
+    BenchTime, MetricDict=RunBenchOnVPS("UNIXBENCH")
+    print('bench: ', BenchTime, MetricDict)
+
+    #TODO: ML model to choose new configuration
+    time.sleep(1)
+
+    #Change VPS configuration
+    NewCfgDict={"cpu": 0, "mem": 0, "hdd": 0}
+    res=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
+    print('setcfg: ', res)
+
