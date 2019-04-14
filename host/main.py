@@ -30,10 +30,11 @@ class SearchSpace():
         HDDlen=len(self.CfgDict['hdd'])
         if(NewCPUidx>=CPUlen or NewMEMidx>=MEMlen or NewHDDidx>=HDDlen):
             return(-1)
-        NewCPU=self.CfgDict['cpu'][NewCPUidx]
-        NewMEM=self.CfgDict['mem'][NewMEMidx]
-        NewHDD=self.CfgDict['hdd'][NewHDDidx]
-        print('setcfg: ', NewCPU, NewMEM, NewHDD)
+        NewCPU=list(self.CfgDict['cpu'].keys())[NewCPUidx]
+        NewMEM=list(self.CfgDict['mem'].keys())[NewMEMidx]
+        NewHDD=list(self.CfgDict['hdd'].keys())[NewHDDidx]
+        NewPrice=self.CfgDict['cpu'][NewCPU]+self.CfgDict['mem'][NewMEM]+self.CfgDict['hdd'][NewHDD]
+        print('setcfg: ', NewCPU, NewMEM, NewHDD, NewPrice)
         tree = XET.parse(FileName)
         root=tree.getroot()
         vcpu=root.find('vcpu')
@@ -48,7 +49,7 @@ class SearchSpace():
         disk.attrib['file']=NewHDD
         tree.write(NewFileName)
         os.system('virsh define '+NewFileName)
-        return(1)
+        return(NewPrice)
 
 def RunBenchOnVPS(BenchType):
     socket.send_pyobj(BenchType)
@@ -69,25 +70,25 @@ def RunBenchOnVPS(BenchType):
 
 if __name__ == '__main__':
     #wait for starting vps
-    os.system("virsh start ubuntu")
-    response = socket.recv_pyobj()
-    print(response)
+    # os.system("virsh start ubuntu")
+    # response = socket.recv_pyobj()
+    # print(response)
 
     #init
     cfgspace=SearchSpace()
     cfgspace.ReadCfgFile('vpscfg.json')
     print('vpscfg: ', cfgspace.CfgDict)
 
-    #run benchmark on VPS
-    # BUG: only support 1 type of benchmark at one time
-    BenchTime, MetricDict=RunBenchOnVPS("CNN")
-    print('bench: ', BenchTime, len(MetricDict['CPUUSG']))
-
-    #TODO: ML model to choose new configuration
-    time.sleep(1)
+    # #run benchmark on VPS
+    # # BUG: only support 1 type of benchmark at one time
+    # BenchTime, MetricDict=RunBenchOnVPS("CNN")
+    # print('bench: ', BenchTime, len(MetricDict['CPUUSG']))
+    #
+    # #TODO: ML model to choose new configuration
+    # time.sleep(1)
 
     #Change VPS configuration
-    NewCfgDict={"cpu": 3, "mem": 3, "hdd": 2}
-    res=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
-    print('setcfg: ', res)
+    NewCfgDict={"cpu": 4, "mem": 4, "hdd": 2}
+    NewPrice=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
+    print('setcfg: price==', NewPrice)
 

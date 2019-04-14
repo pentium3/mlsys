@@ -1,7 +1,21 @@
 {
-	"cpu": ["1", "2", "4", "6", "8"],
-	"mem": ["1048576", "2097152", "4194304", "6291456", "8388608"],
-	"hdd": ["/media/ibm/DISK2_VOL1/kvmvpc/ubuntu_hdd.qcow2",
-			"/home/ibm/Desktop/ubuntu_ssd.qcow2",
-			"/media/ibm/NVME/ubuntu_nvme.qcow2"]
+	"cpu": {
+		"1": 20,
+		"2": 40,
+		"4": 80,
+		"6": 150,
+		"8": 200
+	},
+	"mem": {
+		"1048576": 10,
+		"2097152": 20,
+		"4194304": 40,
+		"6291456": 80,
+		"8388608": 160
+	},
+	"hdd": {
+		"/media/ibm/DISK2_VOL1/kvmvpc/ubuntu_hdd.qcow2": 50,
+		"/home/ibm/Desktop/ubuntu_ssd.qcow2": 150,
+		"/media/ibm/NVME/ubuntu_nvme.qcow2": 200
+	}
 }
