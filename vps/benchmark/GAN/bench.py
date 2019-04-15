@@ -112,8 +112,8 @@ class Bench(object):
         for epoch in range(train_epoch):
             G_losses = []
             D_losses = []
-            for iter in range(mnist.train.num_examples // batch_size // 2):
-                print("iter: ", iter, "//", mnist.train.num_examples // batch_size // 2)
+            for iter in range(mnist.train.num_examples // batch_size // 8):
+                print("iter: ", iter, "//", mnist.train.num_examples // batch_size // 8)
                 # update discriminator
                 x_ = train_set[iter * batch_size:(iter + 1) * batch_size]
                 z_ = np.random.normal(0, 1, (batch_size, 1, 1, 100))
