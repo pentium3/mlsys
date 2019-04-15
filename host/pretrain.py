@@ -92,7 +92,10 @@ if __name__ == '__main__':
     print('price: ', NewPrice)
     print('cfg:   ', NewCfgDict)
     os.system("virsh shutdown ubuntu")
-    time.sleep(20)
+    while True:
+        runshell = os.popen('virsh list').read()
+        if(runshell.find('ubuntu')==-1):
+            break
     Key=str([nc,nm,nh,_b])
     TrainingSet[Key]=BenchTime
 
