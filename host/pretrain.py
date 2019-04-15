@@ -70,34 +70,32 @@ if __name__ == '__main__':
     print('vpscfg: ', cfgspace.CfgDict)
     TrainingSet={}
 
-    #for nc in cfgspace.CfgDict['cpu']:
-    #    for nm in cfgspace.CfgDict['mem']:
-    #        for nh in cfgspace.CfgDict['hdd']:
-    #            for _b in benchlist:
-    nc='12'
-    nm='12582912'
-    nh="/media/ibm/NVME/ubuntu_nvme.qcow2"
-    _b='CNN'
-    #Initialize VPS configuration
-    NewCfgDict={"cpu": nc, "mem": nm, "hdd": nh}
-    NewPrice=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
-    #wait for starting vps
-    os.system("virsh start ubuntu")
-    response = socket.recv_pyobj()
-    print(response)
-    #run benchmark on VPS
-    # NOT A BUG: only support 1 type of benchmark at one time
-    BenchTime, MetricDict=RunBenchOnVPS(_b)
-    print('Bench: ', BenchTime, len(MetricDict['CPUUSG']))
-    print('price: ', NewPrice)
-    print('cfg:   ', NewCfgDict)
-    os.system("virsh shutdown ubuntu")
-    while True:
-        runshell = os.popen('virsh list').read()
-        if(runshell.find('ubuntu')==-1):
-            break
-    Key=str([nc,nm,nh,_b])
-    TrainingSet[Key]=BenchTime
+    for nc in cfgspace.CfgDict['cpu']:
+        for nm in cfgspace.CfgDict['mem']:
+            for nh in cfgspace.CfgDict['hdd']:
+                for _b in benchlist:
+                    #Initialize VPS configuration
+                    NewCfgDict={"cpu": nc, "mem": nm, "hdd": nh}
+                    NewPrice=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
+                    #wait for starting vps
+                    os.system("virsh start ubuntu")
+                    response = socket.recv_pyobj()
+                    print(response)
+                    #run benchmark on VPS
+                    # NOT A BUG: only support 1 type of benchmark at one time
+                    BenchTime, MetricDict=RunBenchOnVPS(_b)
+                    print('-------------------------------------------------')
+                    print('Bench: ', _b, BenchTime, len(MetricDict['CPUUSG']))
+                    print('price: ', NewPrice)
+                    print('cfg:   ', NewCfgDict)
+                    print('-------------------------------------------------')
+                    os.system("virsh shutdown ubuntu")
+                    while True:
+                        runshell = os.popen('virsh list').read()
+                        if(runshell.find('ubuntu')==-1):
+                            break
+                    Key=str([nc,nm,nh,_b])
+                    TrainingSet[Key]=BenchTime
 
     savedat='Mmat.pkl'
     fw=open(savedat, 'wb')
