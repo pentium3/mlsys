@@ -7,7 +7,7 @@ class Bench(object):
 
     def Run(self, ):
         start_time = time.time()
-        os.chdir('./benchmark/7ZBENCH/UnixBench/')
+        os.chdir('./benchmark/7ZBENCH/')
         os.system('rm -f BenchRes')
         cmd="7z b >> BenchRes"
         os.system(cmd)

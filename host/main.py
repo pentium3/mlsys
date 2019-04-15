@@ -74,18 +74,18 @@ if __name__ == '__main__':
     cfgspace.ReadCfgFile('vpscfg.json')
     print('vpscfg: ', cfgspace.CfgDict)
     #Initialize VPS configuration
-    NewCfgDict={"cpu": 0, "mem": 0, "hdd": 0}
+    NewCfgDict={"cpu": 5, "mem": 5, "hdd": 2}
     NewPrice=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
     print('setcfg: price==', NewPrice)
 
     #wait for starting vps
-    os.system("virsh start ubuntu")
+    #os.system("virsh start ubuntu")
     response = socket.recv_pyobj()
     print(response)
 
     #run benchmark on VPS
     # BUG: only support 1 type of benchmark at one time
-    BenchTime, MetricDict=RunBenchOnVPS("UNIXBENCH")
+    BenchTime, MetricDict=RunBenchOnVPS("MD5CPU")
     print('bench: ', BenchTime, len(MetricDict['CPUUSG']))
 
     #TODO: ML model to choose new configuration
