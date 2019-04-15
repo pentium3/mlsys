@@ -100,6 +100,7 @@ if __name__ == '__main__':
     TrainingSet[Key]=BenchTime
 
     savedat='Mmat.pkl'
-    with open(savedat, 'w') as f:
-        pickle.dump(TrainingSet, f)
+    fw=open(savedat, 'wb')
+    pickle.dump(TrainingSet, fw, pickle.HIGHEST_PROTOCOL)
+    fw.close()
     print(TrainingSet)
