@@ -1,9 +1,9 @@
 <domain type="kvm">
   <name>ubuntu</name>
   <uuid>cfe581a7-7222-4fff-a95b-076cd21f2358</uuid>
-  <memory unit="KiB">8388608</memory>
-  <currentMemory unit="KiB">8388608</currentMemory>
-  <vcpu placement="static">8</vcpu>
+  <memory unit="KiB">1048576</memory>
+  <currentMemory unit="KiB">1048576</currentMemory>
+  <vcpu placement="static">1</vcpu>
   <os>
     <type arch="x86_64" machine="pc-i440fx-bionic">hvm</type>
     <bootmenu enable="yes" />
@@ -15,7 +15,7 @@
   </features>
   <cpu check="partial" mode="host-model">
     <model fallback="allow" />
-    <topology cores="8" sockets="1" threads="1" />
+    <topology cores="1" sockets="1" threads="1" />
   </cpu>
   <clock offset="utc">
     <timer name="rtc" tickpolicy="catchup" />
@@ -33,7 +33,7 @@
     <emulator>/usr/bin/kvm-spice</emulator>
     <disk device="disk" type="file">
       <driver name="qemu" type="qcow2" />
-      <source file="/media/ibm/NVME/ubuntu_nvme.qcow2" />
+      <source file="/media/ibm/DISK2_VOL1/kvmvpc/ubuntu_hdd.qcow2" />
       <target bus="sata" dev="sda" />
       <boot order="2" />
       <address bus="0" controller="0" target="0" type="drive" unit="0" />
