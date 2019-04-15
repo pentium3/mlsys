@@ -61,7 +61,7 @@ class Bench(object):
 
     def RunGan(self, ):
         # training parameters
-        batch_size = 200
+        batch_size = 100
         lr = 0.0002
         train_epoch = 1
 

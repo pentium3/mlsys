@@ -10,11 +10,8 @@ import xml.etree.ElementTree as XET
 import zmq
 import pickle
 
-context = zmq.Context()
-socket = context.socket(zmq.REP)
-socket.bind("tcp://*:5555")
 
-benchlist=['7ZBENCH', 'CNN', 'GAN', 'MD5CPU', 'UNIXBENCH']
+benchlist=['GAN', '7ZBENCH', 'CNN', 'MD5CPU', 'UNIXBENCH']
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
@@ -46,7 +43,7 @@ class SearchSpace():
         os.system('virsh define '+NewFileName)
         return(NewPrice)
 
-def RunBenchOnVPS(BenchType):
+def RunBenchOnVPS(socket, BenchType):
     socket.send_pyobj(BenchType)
     response=socket.recv_pyobj()
     MetricList=response
@@ -74,6 +71,9 @@ if __name__ == '__main__':
         for nm in cfgspace.CfgDict['mem']:
             for nh in cfgspace.CfgDict['hdd']:
                 for _b in benchlist:
+                    context = zmq.Context()
+                    socket = context.socket(zmq.REP)
+                    socket.bind("tcp://*:5555")
                     #Initialize VPS configuration
                     NewCfgDict={"cpu": nc, "mem": nm, "hdd": nh}
                     NewPrice=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
@@ -83,7 +83,7 @@ if __name__ == '__main__':
                     print(response)
                     #run benchmark on VPS
                     # NOT A BUG: only support 1 type of benchmark at one time
-                    BenchTime, MetricDict=RunBenchOnVPS(_b)
+                    BenchTime, MetricDict=RunBenchOnVPS(socket, _b)
                     print('-------------------------------------------------')
                     print('Bench: ', _b, BenchTime, len(MetricDict['CPUUSG']))
                     print('price: ', NewPrice)
