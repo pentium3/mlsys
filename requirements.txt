@@ -8,5 +8,4 @@ grpcio-tools
 googleapis-common-protos
 zmq
 scikit-surprise
-hashlib
 itertools
