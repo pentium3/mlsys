@@ -73,8 +73,9 @@ if __name__ == '__main__':
     cfgspace=SearchSpace()
     cfgspace.ReadCfgFile('vpscfg.json')
     print('vpscfg: ', cfgspace.CfgDict)
+
     #Initialize VPS configuration
-    NewCfgDict={"cpu": 5, "mem": 5, "hdd": 2}
+    NewCfgDict={"cpu": 0, "mem": 0, "hdd": 0}
     NewPrice=cfgspace.SetVPSCfg("vpstemplate.xml", NewCfgDict)
     print('setcfg: price==', NewPrice)
 
