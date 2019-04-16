@@ -79,4 +79,5 @@ if __name__ == '__main__':
     socket.send_pyobj(ResList)
     time.sleep(2)
     # TODO: shutdown vps
+    os.system('shutdown -P now')
 
