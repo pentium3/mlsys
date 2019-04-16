@@ -11,7 +11,8 @@ import zmq
 import pickle
 
 
-benchlist=['7ZBENCH', 'CNN', 'MD5CPU']
+#benchlist=['7ZBENCH', 'CNN', 'MD5CPU', 'GAN']
+benchlist=['7ZBENCH']
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
@@ -66,11 +67,10 @@ if __name__ == '__main__':
     cfgspace.ReadCfgFile('vpscfg.json')
     print('vpscfg: ', cfgspace.CfgDict)
     TrainingSet={}
-
-    for nc in cfgspace.CfgDict['cpu']:
-        for nm in cfgspace.CfgDict['mem']:
-            for nh in cfgspace.CfgDict['hdd']:
-                for _b in benchlist:
+    for _b in benchlist:
+        for nc in cfgspace.CfgDict['cpu']:
+            for nm in cfgspace.CfgDict['mem']:
+                for nh in cfgspace.CfgDict['hdd']:
                     context = zmq.Context()
                     socket = context.socket(zmq.REP)
                     socket.bind("tcp://*:5555")
@@ -96,9 +96,9 @@ if __name__ == '__main__':
                             break
                     Key=str([nc,nm,nh,_b])
                     TrainingSet[Key]=BenchTime
-
-    savedat='Mmat.pkl'
-    fw=open(savedat, 'wb')
-    pickle.dump(TrainingSet, fw, pickle.HIGHEST_PROTOCOL)
-    fw.close()
-    print(TrainingSet)
+                    time.sleep(3)
+        savedat=_b+'.pkl'
+        fw=open(savedat, 'wb')
+        pickle.dump(TrainingSet, fw, pickle.HIGHEST_PROTOCOL)
+        fw.close()
+        print(TrainingSet)

@@ -73,6 +73,7 @@ def RunBenchmarkPool(request):
     return(MetricList)
 
 if __name__ == '__main__':
+    time.sleep(15)
     socket.send_pyobj("vps started")
     msg=socket.recv_pyobj()
     ResList=RunBenchmarkPool(msg)
