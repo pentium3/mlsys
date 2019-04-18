@@ -73,6 +73,7 @@ def RunBenchmarkPool(request):
     return(MetricList)
 
 if __name__ == '__main__':
+    print("VPS agent running")
     time.sleep(15)
     socket.send_pyobj("vps started")
     msg=socket.recv_pyobj()
