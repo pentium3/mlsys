@@ -12,7 +12,7 @@ import pickle
 
 
 #benchlist=['7ZBENCH', 'CNN', 'MD5CPU', 'GAN']
-benchlist=['GAN']
+benchlist=['UNIXBENCH']
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
