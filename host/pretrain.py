@@ -95,7 +95,9 @@ if __name__ == '__main__':
                         if(runshell.find('ubuntu')==-1):
                             break
                     Key=str([nc,nm,nh,_b])
-                    TrainingSet[Key]=BenchTime
+                    MetricDict['BenchTime']=BenchTime
+                    MetricDict['Price']=NewPrice
+                    TrainingSet[Key]=BenchTime*BenchTime*NewPrice
                     TrainingMon[Key]=MetricDict
                     time.sleep(3)
         savedat=_b+'_sec.pkl'
