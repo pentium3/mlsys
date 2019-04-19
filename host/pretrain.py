@@ -67,6 +67,7 @@ if __name__ == '__main__':
     cfgspace.ReadCfgFile('vpscfg.json')
     print('vpscfg: ', cfgspace.CfgDict)
     TrainingSet={}
+    TrainingMon={}
     for _b in benchlist:
         for nc in cfgspace.CfgDict['cpu']:
             for nm in cfgspace.CfgDict['mem']:
@@ -96,9 +97,14 @@ if __name__ == '__main__':
                             break
                     Key=str([nc,nm,nh,_b])
                     TrainingSet[Key]=BenchTime
+                    TrainingMon[Key]=MetricDict
                     time.sleep(3)
-        savedat=_b+'.pkl'
+        savedat=_b+'_sec.pkl'
         fw=open(savedat, 'wb')
         pickle.dump(TrainingSet, fw, pickle.HIGHEST_PROTOCOL)
         fw.close()
+        savemondat=_b+'_mon.pkl'
+        fw1=open(savemondat, 'wb')
+        pickle.dump(TrainingMon, fw1, pickle.HIGHEST_PROTOCOL)
+        fw1.close()
         print(TrainingSet)
