@@ -11,8 +11,7 @@ import zmq
 import pickle
 
 
-#benchlist=['7ZBENCH', 'CNN', 'MD5CPU', 'GAN', 'DISKIO', 'MYSQL']
-benchlist=['UNIXBENCH']
+benchlist=['7ZBENCH', 'MD5CPU', 'DISKIO', 'MYSQL', 'CNN', 'GAN']
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
