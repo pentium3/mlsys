@@ -11,7 +11,7 @@ import zmq
 import pickle
 
 
-#benchlist=['7ZBENCH', 'CNN', 'MD5CPU', 'GAN']
+#benchlist=['7ZBENCH', 'CNN', 'MD5CPU', 'GAN', 'DISKIO', 'MYSQL']
 benchlist=['UNIXBENCH']
 
 class SearchSpace():
