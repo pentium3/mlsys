@@ -23,7 +23,7 @@ class Bench(object):
 
     def Run(self, ):
         start_time = time.time()
-        md5_value = 'd55819e9f6d83d3bbe0caa05e7e286f0'
+        md5_value = 'ff77bed3fd3bebe8a3bc1210d3297449'
         result = self.decrypt_md5(md5_value)
         end_time = time.time()
         self.total_ptime = (int)(end_time - start_time)

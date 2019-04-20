@@ -6,17 +6,16 @@ class Bench(object):
     total_ptime = 0
 
     def Run(self, ):
-        start_time = time.time()
         os.chdir('./benchmark/7ZBENCH/')
-        os.system('rm -f BenchRes')
-        cmd="7z b >> BenchRes"
-        os.system(cmd)
-        runshell=os.popen('cat BenchRes').read()
-        cmd = "rm BenchRes"
-        os.system(cmd)
+        if(not os.path.exists('w98.iso')):
+            os.system('wget http://www-users.cselabs.umn.edu/~wang8662/w98.iso -O w98.iso')
+        start_time = time.time()
+        os.system('7z x -ow98 w98.iso')
+        os.system("7z a w98.7z w98/")
+        os.system("rm w98.7z")
+        os.system("rm -rf w98")
         end_time = time.time()
         self.total_ptime = (int)(end_time - start_time)
-        print(runshell,type(runshell),self.total_ptime)
         print("This is Benchmark 7ZBENCH: "+(str)(self.total_ptime))
         return (self.total_ptime)
 

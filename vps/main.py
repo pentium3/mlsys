@@ -16,19 +16,22 @@ socket=context.socket(zmq.REQ)
 socket.connect("tcp://192.168.122.1:5555")
 #socket.connect("tcp://127.0.0.1:5555")
 
-MonitorList=['CPUUSG', 'MEMUSG', 'IOBYTE']
+MonitorList=['CPUUSG', 'MEMUSG', 'IORRAT', 'IOWRAT']
 
-def GetStatMetric(type):
-    ans=""
-    if(type=="CPUUSG"):
-        ans=str(psutil.cpu_percent(interval=1,percpu=False))
-    elif(type=="MEMTOT"):
-        ans=str(psutil.virtual_memory().total)
-    elif(type=="MEMUSG"):
-        ans=str(psutil.virtual_memory().percent)
-    elif(type=="IOBYTE"):
-        ans=str(psutil.disk_io_counters())	    #total HDD I/O amount in Bytes
-    #print("received req for " + type + " == " + ans)
+def GetStatMetric():
+    ans={}
+    for _l in MonitorList:
+        ans[_l]=[]
+    hd1info=list(psutil.disk_io_counters())
+    cpuinfo=str(psutil.cpu_percent(interval=1, percpu=False))
+    hd2info=list(psutil.disk_io_counters())
+    meminfo=str(psutil.virtual_memory().percent)
+    hdread=str(hd2info[2]-hd1info[2])
+    hdwrite=str(hd2info[3]-hd1info[3])
+    ans['CPUUSG']=cpuinfo
+    ans['MEMUSG']=meminfo
+    ans['IORRAT']=hdread
+    ans['IOWRAT']=hdwrite
     return (ans)
 
 def RunBenchmark(type):
@@ -52,11 +55,12 @@ def RunBenchmarkPool(request):
     task=pool.submit(RunBenchmark, type)    #Start another thread to run benchmark
     cnt=0
     while(not task.done()):                 #Monitor CPU/MEM/IO while benchmarking
-        time.sleep(0.4)
+        #time.sleep(0.4)
         cnt+=1
         #print(cnt,time.time())
+        stattmp=GetStatMetric()
         for _l in MonitorList:
-            MetricDict[_l].append(GetStatMetric(_l))
+            MetricDict[_l].append(stattmp[_l])
     BenchTime=task.result()
     if(cnt>1):          #remove the last one in list MetricDict[_l], since the last monitor data may be get after the bench finished
         cnt-=1
