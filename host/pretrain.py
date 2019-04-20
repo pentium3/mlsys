@@ -65,9 +65,9 @@ if __name__ == '__main__':
     cfgspace=SearchSpace()
     cfgspace.ReadCfgFile('vpscfg.json')
     print('vpscfg: ', cfgspace.CfgDict)
-    TrainingSet={}
-    TrainingMon={}
     for _b in benchlist:
+        TrainingSet = {}
+        TrainingMon = {}
         for nc in cfgspace.CfgDict['cpu']:
             for nm in cfgspace.CfgDict['mem']:
                 for nh in cfgspace.CfgDict['hdd']:
