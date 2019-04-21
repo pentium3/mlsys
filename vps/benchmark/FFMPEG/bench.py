@@ -10,7 +10,7 @@ class Bench(object):
         if(not os.path.exists('v.mp4')):
             os.system('wget http://www-users.cselabs.umn.edu/~wang8662/v.mp4 -O v.mp4')
         start_time = time.time()
-        os.system('ffmpeg.exe -i v.mp4 -c:v libx264 -crf 44 vo.flv')
+        os.system('ffmpeg -i v.mp4 -c:v libx264 -crf 44 vo.flv')
         #os.system("rm v.mp4")
         os.system("rm vo.flv")
         end_time = time.time()
