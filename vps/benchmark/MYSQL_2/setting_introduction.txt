@@ -1,0 +1,9 @@
+﻿Task:
+Read Only OLTP tests
+https://wiki.mikejung.biz/Sysbench#Creating_a_test_database_with_Sysbench
+
+ 
+
+
+
+
