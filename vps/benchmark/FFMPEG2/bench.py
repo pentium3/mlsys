@@ -11,7 +11,7 @@ class Bench(object):
             os.system('wget http://www-users.cselabs.umn.edu/~wang8662/v.mp4 -O v.mp4')
         start_time = time.time()
         os.system('ffmpeg -i v.mp4 -c:v libx264 -crf 44 vo.mkv')
-        os.system("rm vo.avi")
+        os.system("rm vo.mkv")
         end_time = time.time()
         self.total_ptime = (int)(end_time - start_time)
         print("This is Benchmark FFMPEG2: "+(str)(self.total_ptime))
