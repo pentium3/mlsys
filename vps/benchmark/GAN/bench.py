@@ -61,7 +61,7 @@ class Bench(object):
 
     def RunGan(self, ):
         # training parameters
-        batch_size = 100
+        batch_size = 50
         lr = 0.0002
         train_epoch = 1
 
@@ -112,8 +112,8 @@ class Bench(object):
         for epoch in range(train_epoch):
             G_losses = []
             D_losses = []
-            for iter in range(1):
-                print("iter: ", iter, "//", mnist.train.num_examples // batch_size // 64)
+            for iter in range(3):
+                print("iter: ", iter, "//", mnist.train.num_examples // batch_size)
                 # update discriminator
                 x_ = train_set[iter * batch_size:(iter + 1) * batch_size]
                 z_ = np.random.normal(0, 1, (batch_size, 1, 1, 100))
