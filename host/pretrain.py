@@ -11,7 +11,7 @@ import zmq
 import pickle
 
 
-benchlist=['FFMPEG2', 'FFMPEG1', '7ZBENCH2']
+benchlist=['7ZBENCH2', 'MYSQL_1', 'MYSQL_2', 'MYSQL_3', 'MYSQL_4', 'WEB', 'WEB_2', 'WEB_3']
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
