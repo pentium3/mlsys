@@ -11,7 +11,7 @@ import zmq
 import pickle
 
 
-benchlist=['GAN', 'FFMPEG']
+benchlist=['FFMPEG2', 'FFMPEG1', '7ZBENCH2']
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
