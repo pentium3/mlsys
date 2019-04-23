@@ -7,7 +7,7 @@ class Bench(object):
 
     def Run(self, ):
         start_time = time.time()
-        os.chdir('./benchmark/htstress/')
+        os.chdir('./benchmark/WEB_3/')
         os.system('./build.sh')
         os.system('./htstress -n 100000 -c 1000 -t 8 www.google.com')
         end_time = time.time()
