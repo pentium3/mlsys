@@ -1,0 +1,12 @@
+﻿Task:
+
+Read and Write OLTP test with 16 threaded and random connection mode
+
+
+https://wiki.mikejung.biz/Sysbench#Creating_a_test_database_with_Sysbench
+
+ 
+
+
+
+

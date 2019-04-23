@@ -1,0 +1,3 @@
+﻿-n 100000; total number of requests to make
+-c 100; concurrency
+-t 4; threads number
