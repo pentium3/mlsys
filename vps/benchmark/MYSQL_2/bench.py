@@ -7,7 +7,7 @@ class Bench(object):
 
     def Run(self, ):
         start_time = time.time()
-        os.chdir('./benchmark/MYSQL/')
+        os.chdir('./benchmark/MYSQL_2/')
         os.system('sysbench oltp_read_write --db-driver=mysql --table-size=10000000  --mysql-host=localhost --mysql-db=hive --mysql-user=root --mysql-password=123456 prepare')
         os.system('sysbench oltp_read_write --db-driver=mysql --table-size=10000000 --mysql-db=hive --mysql-user=root --mysql-password=123456 --max-requests=0 --oltp-read-only --oltp-skip-trx  --oltp-nontrx-mode=select --num-threads=2 run')
         os.system('sysbench oltp_read_write --db-driver=mysql --table-size=10000000 --mysql-db=hive --mysql-user=root --mysql-password=123456 --max-requests=0 --oltp-read-only --oltp-skip-trx  --oltp-nontrx-mode=select --num-threads=4 run')
