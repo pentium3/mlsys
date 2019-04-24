@@ -120,7 +120,7 @@ param_grid = {'n_epochs': [30, 40, 50, 60, 70],
               'reg_qi': [0.06, 0.04, 0.08],
               'reg_bu': [0.02, 0.04],
               'reg_bi': [0.02, 0.04],
-              'init_high': [1, 5, 7, 10]
+              'init_high': [1, 5, 7, 15]
               }
 gs = GridSearchCV(NMF, param_grid, measures=['RMSE', 'MAE'], n_jobs=-1)
 gs.fit(data)
