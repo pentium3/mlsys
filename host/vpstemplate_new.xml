@@ -1,9 +1,9 @@
 <domain type="kvm">
   <name>ubuntu</name>
   <uuid>cfe581a7-7222-4fff-a95b-076cd21f2358</uuid>
-  <memory unit="KiB">2097152</memory>
-  <currentMemory unit="KiB">2097152</currentMemory>
-  <vcpu placement="static">1</vcpu>
+  <memory unit="KiB">16000000</memory>
+  <currentMemory unit="KiB">16000000</currentMemory>
+  <vcpu placement="static">2</vcpu>
   <os>
     <type arch="x86_64" machine="pc-i440fx-bionic">hvm</type>
     <bootmenu enable="yes" />
@@ -15,7 +15,7 @@
   </features>
   <cpu check="partial" mode="host-model">
     <model fallback="allow" />
-    <topology cores="1" sockets="1" threads="1" />
+    <topology cores="2" sockets="1" threads="1" />
   </cpu>
   <clock offset="utc">
     <timer name="rtc" tickpolicy="catchup" />

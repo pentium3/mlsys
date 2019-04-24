@@ -7,11 +7,11 @@ from surprise import evaluate, print_perf, Reader
 from surprise.model_selection import GridSearchCV
 from surprise.model_selection import train_test_split
 
-benchlist1=['MYSQL', 'MD5CPU', '7ZBENCH', 'CNN', 'GAN', 'FFMPEG']
+benchlist1=['MYSQL_1', 'MYSQL_2', 'MYSQL_3', 'MYSQL_4', 'MYSQL', 'MD5CPU', '7ZBENCH', 'CNN', 'GAN', 'FFMPEG', '7ZBENCH2', 'FFMPEG1', 'FFMPEG2']
 # training set
 benchlist2=['DISKIO']
 # testing set
-benchlist=['MYSQL', 'MD5CPU', 'DISKIO', '7ZBENCH', 'CNN', 'GAN', 'FFMPEG']
+benchlist=['MYSQL_1', 'MYSQL_2', 'MYSQL_3', 'MYSQL_4', 'MYSQL', 'MD5CPU', 'DISKIO', '7ZBENCH', 'CNN', 'GAN', 'FFMPEG', '7ZBENCH2', 'FFMPEG1', 'FFMPEG2']
 # whole dataset
 MAXTIME=100    #for normalization
 MAXCOST=300    #for normalization
