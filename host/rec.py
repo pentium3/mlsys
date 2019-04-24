@@ -7,13 +7,17 @@ from surprise import evaluate, print_perf, Reader
 from surprise.model_selection import GridSearchCV
 from surprise.model_selection import train_test_split
 
-benchlist1=['MYSQL_1', 'MYSQL_2', 'MYSQL_3', 'MYSQL_4', 'MYSQL', 'MD5CPU', '7ZBENCH', 'CNN', 'GAN', 'FFMPEG', '7ZBENCH2', 'FFMPEG1', 'FFMPEG2']
-# training set
-benchlist2=['DISKIO']
+benchlist=['MYSQL_1', 'MYSQL_2', 'MYSQL_3', 'MYSQL_4', 'MYSQL', 'MD5CPU', '7ZBENCH', 'CNN', 'GAN', 'FFMPEG', '7ZBENCH2', 'FFMPEG1', 'FFMPEG2', 'DISKIO']
+# whole set
+predict_bench='DISKIO'
 # testing set
-benchlist=['MYSQL_1', 'MYSQL_2', 'MYSQL_3', 'MYSQL_4', 'MYSQL', 'MD5CPU', 'DISKIO', '7ZBENCH', 'CNN', 'GAN', 'FFMPEG', '7ZBENCH2', 'FFMPEG1', 'FFMPEG2']
-# whole dataset
-MAXTIME=100    #for normalization
+benchlist1=benchlist.copy()
+benchlist1.remove(predict_bench)
+# training dataset
+print("train", benchlist1)
+print("test ", predict_bench)
+print("whole", benchlist)
+MAXTIME=50    #for normalization
 MAXCOST=300    #for normalization
 
 vpsset={}
@@ -77,9 +81,9 @@ def txt2list(filename):
     return(res)
 
 pkl2dat(benchlist, 'pretrain.txt')
-pkl2dat(benchlist2, 'testorig.txt')
+pkl2dat([predict_bench], 'testorig.txt')
 pkl2dat(benchlist1, 'train.txt')
-pkl2testdat(benchlist2, 'test.txt', [0,1,2,3], 0)
+pkl2testdat([predict_bench], 'test.txt', [0,1,2,3], 0)
 os.system('rm tmp.txt')
 os.system('cat train.txt test.txt > tmp.txt')
 
@@ -122,7 +126,7 @@ gs = GridSearchCV(NMF, param_grid, measures=['RMSE', 'MAE'], n_jobs=-1)
 gs.fit(data)
 print(gs.best_score)
 print(gs.best_params)
-# https://surprise.readthedocs.io/en/stable/matrix_factorization.html
+## https://surprise.readthedocs.io/en/stable/matrix_factorization.html
 print("**************************************************************************")
 
 print("")
@@ -132,7 +136,9 @@ print("*************************************************************************
 fr=Reader(line_format='user item rating timestamp',sep=' ')
 fp=os.path.expanduser('tmp.txt')
 dtmp=Dataset.load_from_file(fp, reader=fr)
-param_grid = {'n_epochs': [10, 10], 'lr_all': [0.002, 0.005], 'reg_all': [0.4, 0.6]}
+param_grid = {'n_epochs': [70, 100, 150, 200], 
+             'lr_all': [0.002, 0.005, 0.008, 0.01, 0.02], 
+             'reg_all': [0.04, 0.06, 0.02, 0.08, 0.1]}
 gs = GridSearchCV(SVD, param_grid, measures=['RMSE', 'MAE'], n_jobs=-1)
 gs.fit(dtmp)
 print(gs.best_score)
@@ -141,14 +147,16 @@ print(type(galgo))
 galgo.fit(dtmp.build_full_trainset())
 reslist=[]
 for i in range(75):
-    pred=galgo.predict('DISKIO',str(i))
+    pred=galgo.predict(predict_bench,str(i))
     reslist.append((pred.uid, pred.iid, pred.est))
 ressort=sorted(reslist, key= lambda k:float(k[2]))
-#print(ressort)
+print('predict: ------------------------------------------------------------------')
+print(ressort)
 print([r[1] for r in ressort[:10]])
 origlist=txt2list('testorig.txt')
 origsort=sorted(origlist, key= lambda k:float(k[2]))
-#print(origsort)
+print('original: -----------------------------------------------------------------')
+print(origsort)
 print([r[1] for r in origsort[:10]])
 print("***************************************************************************")
 
