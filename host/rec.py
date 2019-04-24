@@ -87,47 +87,47 @@ pkl2testdat([predict_bench], 'test.txt', [0,1,2,3], 0)
 os.system('rm tmp.txt')
 os.system('cat train.txt test.txt > tmp.txt')
 
-print("")
-print("RMSE on cross validation on whole dataset")
-print("***************************************************************************")
-fp=os.path.expanduser('pretrain.txt')
-fr=Reader(line_format='user item rating timestamp',sep=' ')
-# user: benno | item: vpsno | rating: vpssc
-data=Dataset.load_from_file(fp, reader=fr)
-param_grid = {'n_epochs': [200, 150, 100], 
-              'lr_bu': [0.002, 0.005, 0.008, 0.01, 0.02], 
-              'lr_bi': [0.002, 0.005, 0.008, 0.01, 0.02], 
-              'lr_pu': [0.002, 0.005, 0.008, 0.01, 0.02], 
-              'lr_qi': [0.002, 0.005, 0.008, 0.01, 0.02], 
-              'reg_bu': [0.02, 0.04, 0.06],
-              'reg_bi': [0.02, 0.04, 0.06],
-              'reg_pu': [0.02, 0.04, 0.06],
-              'reg_qi': [0.02, 0.04, 0.06],
-              }
-gs = GridSearchCV(SVD, param_grid, measures=['RMSE', 'MAE'], n_jobs=-1)
-gs.fit(data)
-print(gs.best_score)
-print(gs.best_params)
+# print("")
+# print("RMSE on cross validation on whole dataset")
+# print("***************************************************************************")
+# fp=os.path.expanduser('pretrain.txt')
+# fr=Reader(line_format='user item rating timestamp',sep=' ')
+# # user: benno | item: vpsno | rating: vpssc
+# data=Dataset.load_from_file(fp, reader=fr)
+# param_grid = {'n_epochs': [200, 150, 100], 
+#               'lr_bu': [0.002, 0.005, 0.008, 0.01, 0.02], 
+#               'lr_bi': [0.002, 0.005, 0.008, 0.01, 0.02], 
+#               'lr_pu': [0.002, 0.005, 0.008, 0.01, 0.02], 
+#               'lr_qi': [0.002, 0.005, 0.008, 0.01, 0.02], 
+#               'reg_bu': [0.02, 0.04, 0.06],
+#               'reg_bi': [0.02, 0.04, 0.06],
+#               'reg_pu': [0.02, 0.04, 0.06],
+#               'reg_qi': [0.02, 0.04, 0.06],
+#               }
+# gs = GridSearchCV(SVD, param_grid, measures=['RMSE', 'MAE'], n_jobs=-1)
+# gs.fit(data)
+# print(gs.best_score)
+# print(gs.best_params)
 
-fp=os.path.expanduser('pretrain.txt')
-fr=Reader(line_format='user item rating timestamp',sep=' ')
-# user: benno | item: vpsno | rating: vpssc
-data=Dataset.load_from_file(fp, reader=fr)
-param_grid = {'n_epochs': [30, 40, 50, 60, 70], 
-              'lr_bu': [0.002, 0.005, 0.007, 0.01, 0.02], 
-              'lr_bi': [0.005, 0.002, 0.007, 0.01, 0.02],
-              'reg_pu': [0.06, 0.04, 0.08],
-              'reg_qi': [0.06, 0.04, 0.08],
-              'reg_bu': [0.02, 0.04],
-              'reg_bi': [0.02, 0.04],
-              'init_high': [1, 5, 7, 15]
-              }
-gs = GridSearchCV(NMF, param_grid, measures=['RMSE', 'MAE'], n_jobs=-1)
-gs.fit(data)
-print(gs.best_score)
-print(gs.best_params)
-## https://surprise.readthedocs.io/en/stable/matrix_factorization.html
-print("**************************************************************************")
+# fp=os.path.expanduser('pretrain.txt')
+# fr=Reader(line_format='user item rating timestamp',sep=' ')
+# # user: benno | item: vpsno | rating: vpssc
+# data=Dataset.load_from_file(fp, reader=fr)
+# param_grid = {'n_epochs': [30, 40, 50, 60, 70], 
+#               'lr_bu': [0.002, 0.005, 0.007, 0.01, 0.02], 
+#               'lr_bi': [0.005, 0.002, 0.007, 0.01, 0.02],
+#               'reg_pu': [0.06, 0.04, 0.08],
+#               'reg_qi': [0.06, 0.04, 0.08],
+#               'reg_bu': [0.02, 0.04],
+#               'reg_bi': [0.02, 0.04],
+#               'init_high': [1, 5, 7, 10]
+#               }
+# gs = GridSearchCV(NMF, param_grid, measures=['RMSE', 'MAE'], n_jobs=-1)
+# gs.fit(data)
+# print(gs.best_score)
+# print(gs.best_params)
+# ## https://surprise.readthedocs.io/en/stable/matrix_factorization.html
+# print("**************************************************************************")
 
 print("")
 print("Top-K accuracy on splited testing set with 2 ref configuration")
