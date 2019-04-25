@@ -11,7 +11,7 @@ import zmq
 import pickle
 
 
-benchlist=['MYSQL_4', 'MYSQL_2', 'MYSQL_3', 'MYSQL_1', 'WEB', 'WEB_2', 'WEB_3']
+benchlist=['WEIGHTTP']
 
 class SearchSpace():
     def ReadCfgFile(self, CfgFile):
