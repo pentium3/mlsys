@@ -21,3 +21,7 @@ Run benchmark and monitor performance metrics. Send the performance data to Host
 ## Usage
 
 Run ```python main.py``` on host side. Then the VPS will be automatically started.
+
+## Reference
+
+Selecta: Heterogeneous Cloud Storage Configuration for Data Analytics,  USENIX ATC '18
